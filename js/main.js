@@ -36,66 +36,64 @@ var markers = L.markerClusterGroup({ chunkedLoading: true });
 // }
 
 // load();
-let houses = [];
 
-async function githubUsers() {
-    let response = await fetch('points.json');
-    let users = await response.json();
 
-    return (users);
+async function getJSON(dist) {
+    return fetch('https://vietdoo.engineer/api/v1.0/houses/?dist=' + dist)
+        .then((response)=>response.json())
+        .then((responseJson)=>{return responseJson});
 }
 
-async function f1 () {
-    resp = githubUsers();
-    resp.then(res => {houses = res});
+async function caller() {
+    const houses = await this.getJSON('Quận 5');  
+    console.log('number of houses: ',houses.length);
+    for (var i = 0; i < houses.length; i++) {
+        var lat = houses[i]['lat'];
+        var long = houses[i]['long'];
+        var title = houses[i]['title'];
+        var price = houses[i]['price'];
+        var img = houses[i]['img'];
+        var url = houses[i]['url']
+        var marker = L.marker(L.latLng(lat, long), { title: title});
+        var imgStr = '<img src = "' + img +  '" style="width: 100px;" ></img>'
+        var imgLink = '<a href = "' + url + '"  >Link bài viết</a>'
 
+        var popup = title + '<h2>' + price + '</h2>' + imgStr + imgLink
+        marker.bindPopup(popup);
+        markers.addLayer(marker);
+    }
 }
 
-function f1a () {
+caller();
+
+async function resetLayer() {
+    markers.clearLayers();
+
+    var radios = document.getElementsByName('district');
+    var option = '';
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+            option = radios[i].value;
+        }
+    }
+
+    
+    
+    const houses = await this.getJSON(option);  
     console.log(houses.length);
     for (var i = 0; i < houses.length; i++) {
         var lat = houses[i]['lat'];
         var long = houses[i]['long'];
         var title = houses[i]['title'];
         var price = houses[i]['price'];
+        var img = houses[i]['img'];
         console.log(lat, long, title, price);
-        var marker = L.marker(L.latLng(lat, long), { title: title });
-        marker.bindPopup(title);
+        var marker = L.marker(L.latLng(lat, long), { title: title});
+
+        var imgStr = '<img src = "' + img +  '" style="width: 100px;" ></img>'
+        var popup = title + '<h2>' + price + '</h2>' + imgStr
+        marker.bindPopup(popup);
         markers.addLayer(marker);
-    }
-}
-
-
-f1().then(console.log(houses.length))
-
-
-// async function xxx() {
-//     await draw();
-// }
-
-// xxx();
-
-function resetLayer() {
-    markers.clearLayers();
-
-    var radios = document.getElementsByName('district');
-    var option = 0;
-    for (var i = 0, length = radios.length; i < length; i++) {
-        if (radios[i].checked) {
-            option = radios[i].value;
-        }
-    }
-    
-    for (var i = 0; i < houses.length; i++) {
-        var lat = houses[i]['lat'];
-        var long = houses[i]['long'];
-        var title = houses[i]['title'];
-        var price = houses[i]['price'];
-        if (title % option === 0) {
-            var marker = L.marker(L.latLng(lat, long), { title: title });
-            marker.bindPopup(title);
-            markers.addLayer(marker);
-        }
     }
 }
 
