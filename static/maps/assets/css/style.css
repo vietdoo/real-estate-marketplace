@@ -3,11 +3,91 @@
     margin: 0;
 }
 
+#main {
+    width: 100vw;
+    height: 100vh;
+}
+
+#header {
+    width: 100vw;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+}
+
+#navbar {
+    height: 50%;
+    margin: auto 0;
+    border-bottom: 1px solid rgb(210, 209, 209);
+}
+
+#navbar .navbar-item {
+    width: 20%;
+    float: left;
+}
+
+#navbar .navbar-item2 {
+    width: 60%;
+    float: left;
+    text-align: center;
+}
+
+#navbar .nav-select {
+    float: left;
+    text-align: center;
+    align-items: center;
+    margin: 13px;
+    font-size: 18px;
+}
+
+#navbar .nav-select:hover {
+    cursor: pointer;
+    color: rgb(0, 106, 255);
+}
+
+#filterbar {
+    height: 50%;
+}
+
+#filterbar .filter-element {
+    width: 50%;
+    float: left;
+    margin: 10px 10px;
+}
+
+
+#content {
+    width: 100%;
+    height: 100%;
+}
+
+#content #house-container {
+    margin: 10px;
+}
+
+#content #house-container .house {
+    margin: 10px;
+    width: 50%;
+    float: left;
+}
+
 #map {
-	width: 100vw; 
-	height: 100vh;
-    padding: 0;
-    margin: 0;
+	width: 50%; 
+	height: calc(100vh - 100px);
+    border-top: 1px solid rgb(210, 209, 209);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+#sidebar {
+    width: 50%; 
+	height: 100%;
+    float: left;
+    border-left: 1px solid rgb(142, 142, 142);
+    border-top: 1px solid rgb(210, 209, 209);
+    margin-top: 100px;
 }
 
 #progress {
@@ -63,16 +143,45 @@
 }
 
 .radio-input {
-    margin-right: 40px;
+
 }
 
 .infopane {
     margin-left: 20px;
 }
 
-/*
-=>> An homepage 
-*/
 .img-fluid {
     display: none;
 }
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .column1 {
+    float: left;
+    width: 100px;
+  }
+  
+  .column2 {
+    float: left;
+    width: 200px;
+    margin-left: 20px;
+  }
+
+  .row {
+    width: 400px;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+ #dropdown {
+    display: block;
+    height: px;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
