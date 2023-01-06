@@ -15,7 +15,6 @@ html {
 
 #header {
     width: 100vw;
-    height: 120px;
     position: fixed;
     top: 0;
     background-color: #fff;
@@ -74,13 +73,10 @@ html {
 
 #content #house-container .house {
     margin: 10px;
-    width: 50%;
-    float: left;
 }
 
 #map {
-	width: 60%; 
-	height: calc(100vh - 120px);
+	width: 60%;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -91,7 +87,6 @@ html {
     width: 40%; 
 	height: 100%;
     float: left;
-    margin-top: 120px;
 }
 
 #progress {
@@ -268,8 +263,135 @@ html {
   }
   .slider-range-wrap {
     position: relative;
-    width: 200px;
     height: 50px;
     margin: 0 30px;
     margin-top: 10px;
+  }
+
+  @media (max-width: 1000px) {
+    .house {
+        width: 95%;
+        height: 270px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+        border-radius: 5px;
+    }
+    .district-section {
+        width: 15%; 
+        float: left;
+    }
+    .slider-range-wrap {
+        width: 40%; 
+        float: left;
+    }
+    .button-section {
+        width: 15%; 
+        float: left;
+    }
+    #district {
+        margin: 0 20px;
+    }
+    #header {
+        height: 15%;
+    }
+    #map {
+        height: 85%;
+    }
+    #sidebar {
+        margin-top: 15vh;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #district {
+        margin: 0;
+    }
+    .slider-range-wrap {
+        margin-left: 80px;
+    }
+    #header {
+        height: 25vh;
+    }
+    #map {
+        height: 75vh;
+    }
+    #sidebar {
+        margin-top: 25vh;
+    }
+    .district-section {
+        width: 15%; 
+        float: left;
+    }
+    .slider-range-wrap {
+        width: 60%; 
+        float: left;
+    }
+    .button-section {
+        width: 25%; 
+        float: left;
+    }
+  }
+
+  @media (max-width: 470px) {
+    .slider-range-wrap {
+        margin-left: 0px;
+    }
+    #header {
+        height: 32vh;
+    }
+    #map {
+        height: 68vh;
+    }
+    #sidebar {
+        margin-top: 32vh;
+    }
+    .district-section {
+        width: 100%; 
+        float: left;
+        text-align: center;
+    }
+    .slider-range-wrap {
+        width: 80%; 
+        float: left;
+        margin-left: 30px;
+        margin-top: 20px;
+    }
+    .button-section {
+        width: 100%; 
+        float: left;
+        text-align: center;
+    }
+  }
+  
+  @media (min-width: 1001px) {
+    .house {
+        width: 45%;
+        height: 270px; 
+        float: left; 
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+        border-radius: 5px;
+    }
+    .district-section {
+        width: 15%; 
+        float: left;
+    }
+    .slider-range-wrap {
+        width: 30%; 
+        float: left;
+    }
+    .button-section {
+        width: 15%; 
+        float: left;
+    }
+    #district {
+        margin: 0 20px;
+    }
+    #header {
+        height: 15%;
+    }
+    #map {
+        height: 85%;
+    }
+    #sidebar {
+        margin-top: 15vh;
+    }
   }

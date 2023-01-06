@@ -121,7 +121,7 @@ async function caller() {
     var agents = getRandomArrayElements(houses, numberRandomHouse);
     var inner = "";
     for(var i = 0; i < numberRandomHouse; i++) {
-        var agentInner = '<div class="house" style="width: 45%; min-height: 250px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
+        var agentInner = '<div class="house">' + makeAdvertise(agents[i]) + '</div>';
         inner += agentInner;
     }
 
@@ -156,7 +156,7 @@ async function resetLayer() {
     var inner = "";
 
     for(var i = 0; i < agents.length; i++) {
-        var agentInner = '<div class="house" style="width: 45%; height: 270px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
+        var agentInner = '<div class="house" style="">' + makeAdvertise(agents[i]) + '</div>';
         inner += agentInner;
     }
 
