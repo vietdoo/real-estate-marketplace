@@ -1,3 +1,47 @@
+function numberWithCommas(x) {
+    if (x !== null) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+}
+
+$(function() {
+    $( "#slider-range" ).slider({
+        range: true,
+        min: 100000000,
+        max: 10000000000,
+        values: [ 100000000, 10000000000 ],
+        slide: function( event, ui ) {
+            $( "#min-range" ).html(numberWithCommas(ui.values[ 0 ]) );
+            $( "#max-range" ).html(numberWithCommas(ui.values[ 1 ]) );
+            // $( "#lowInput" ).value = $( "#min" ).innerHTML.replace(/,/g, '');
+            // $( "#highInput" ).value = $( "#max" ).innerHTML.replace(/,/g, '');
+        }
+    });
+
+    //slider range data tooltip set
+    // var $handler = $("#slider-range .ui-slider-handle");
+
+    // $handler.eq(0).append("<b class='amount'><span id='min'>"+numberWithCommas($( "#slider-range" ).slider( "values", 0 )) +"</span> đ</b>");
+    // $handler.eq(1).append("<b class='amount'><span id='max'>"+numberWithCommas($( "#slider-range" ).slider( "values", 1 )) +"</span> đ</b>");
+
+    //slider range pointer mousedown event
+    $handler.on("mousedown",function(e){
+        e.preventDefault();
+        $(this).children(".amount").fadeIn(300);
+    });
+
+    //slider range pointer mouseup event
+    $handler.on("mouseup",function(e){
+        e.preventDefault();
+        $(this).children(".amount").fadeOut(300);
+    });
+    console.log(numberWithCommas($( "#slider-range" ).slider( "values", 0 )));
+});
+    
+
+
+// slider-end
+
 var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
@@ -6,6 +50,8 @@ var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 var map = L.map('map', {center: latlng, zoom: 13, layers: [tiles]});
 var markers = L.markerClusterGroup({ chunkedLoading: true });
+var numberRandomHouse = 20;
+
 
 function makePopup(house) {
     var title = house['title'];
@@ -39,16 +85,26 @@ function getRandomArrayElements(arr, count) {
     }
     return shuffled.slice(min);
 }
-
-async function getJSON(dist) {
+// https://vietdoo.engineer/api/v1.0/houses/?dist=Qu%E1%BA%ADn%204&low=1920000000&high=2200000000
+async function getJSON(dist, low, high) {
+    if (low !== 0 && high !== 0) {
+        return fetch('https://vietdoo.engineer/api/v1.0/houses/?dist=' + dist + '&low=' + low + '&high=' + high)
+            .then((response)=>response.json())
+            .then((responseJson)=>{return responseJson});
+    }
     return fetch('https://vietdoo.engineer/api/v1.0/houses/?dist=' + dist)
-        .then((response)=>response.json())
-        .then((responseJson)=>{return responseJson});
+            .then((response)=>response.json())
+            .then((responseJson)=>{return responseJson});
 }
 
 async function caller() {
     var startTime = performance.now()
-    const houses = await this.getJSON('Quận 5');  
+    const houses = await this.getJSON('Quận 5','','');  
+
+    var quantityString = "";
+    quantityString = 'Số lượng: ' + houses.length;
+    document.getElementById("quantity").innerHTML = quantityString;
+
     console.log("Successfully request: ", houses.length, " houses in ", houses[0]['dist']);
     for (var i = 0; i < houses.length; i++) {
         var lat = houses[i]['lat'];
@@ -62,10 +118,10 @@ async function caller() {
         markers.addLayer(marker);
     }
 
-    var agents = getRandomArrayElements(houses, 10);
+    var agents = getRandomArrayElements(houses, numberRandomHouse);
     var inner = "";
-    for(var i = 0; i < 10; i++) {
-        var agentInner = '<div class="house" style="width: 47%; height: 250px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
+    for(var i = 0; i < numberRandomHouse; i++) {
+        var agentInner = '<div class="house" style="width: 45%; min-height: 250px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
         inner += agentInner;
     }
 
@@ -81,23 +137,38 @@ async function resetLayer() {
 
     var startTime = performance.now()
 
-    var select = document.getElementById('district');
-    var option = '';
-    option = select.value;
-    
-    const houses = await this.getJSON(option); 
-    
-    var agents = getRandomArrayElements(houses, 10);
+    var selectDistrict = document.getElementById('district');
+
+    var minPrice = document.getElementById('min-range').innerHTML.split('.').join("").replace(/,/g, '');
+    var maxPrice = document.getElementById('max-range').innerHTML.split('.').join("").replace(/,/g, '');
+
+    var optionDistrict = '';
+    optionDistrict = selectDistrict.value;
+
+    const houses = await this.getJSON(optionDistrict, minPrice, maxPrice); 
+
+    if (houses >= numberRandomHouse) {
+        var agents = getRandomArrayElements(houses, numberRandomHouse);
+    }
+    else {
+        var agents = houses;
+    }
     var inner = "";
 
-    for(var i = 0; i < 10; i++) {
-        var agentInner = '<div class="house" style="width: 47%; height: 250px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
+    for(var i = 0; i < agents.length; i++) {
+        var agentInner = '<div class="house" style="width: 45%; height: 270px; float: left; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; border-radius: 5px;">' + makeAdvertise(agents[i]) + '</div>';
         inner += agentInner;
     }
 
     document.getElementById("house-container").innerHTML = inner;
 
+    var quantityString = "";
+    quantityString = 'Số lượng: ' + houses.length;
+
+    document.getElementById("quantity").innerHTML = quantityString;
+
     console.log("Successfully request: ", houses.length, " houses in ", houses[0]['dist']);
+
     for (var i = 0; i < houses.length; i++) {
         var lat = houses[i]['lat'];
         var long = houses[i]['long'];
@@ -112,4 +183,3 @@ async function resetLayer() {
 }
 
 map.addLayer(markers);
-
