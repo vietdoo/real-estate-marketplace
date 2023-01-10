@@ -42,9 +42,12 @@ $(function() {
 
 // slider-end
 
-var tiles = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-	maxZoom: 20,
-	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+var tiles = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+	attribution: ' Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 18,
+	ext: 'png'
 }),
     latlng = L.latLng(10.773081, 106.6829); 
 
@@ -178,7 +181,8 @@ async function resetLayer() {
     document.getElementById("house-container").innerHTML = inner;
 
     var quantityString = "";
-    quantityString = houses.length + ' căn nhà được tìm thấy';
+    quantityString = '<h2>' + houses.length + '</h2>  Ngôi nhà được tìm thấy';
+    document.getElementById("quantity").innerHTML = quantityString;
 
     document.getElementById("quantity").innerHTML = quantityString;
 
