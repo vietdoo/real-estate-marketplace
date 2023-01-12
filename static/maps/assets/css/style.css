@@ -279,7 +279,7 @@ html {
   font-weight: 600;
   font-size: 13px;
   padding: 0;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
   text-decoration: none;
   user-select: none;
@@ -301,6 +301,10 @@ html {
   transform: translate(2px, 2px);
 }
 
+.header-btn:hover {
+    color:rgb(0, 106, 255)
+}
+
 @media (min-width: 768px) {
   .my-btn {
     min-width: 50px;
@@ -316,17 +320,18 @@ html {
         border-radius: 5px;
     }
     #map {
-        width: calc(100% - 320px);
+        width: calc(100% - 280px);
     }
     
     .map-section {
-        width: calc(100% - 280px); 
+        width: calc(100% - 240px); 
         float: left;
     }
     #sidebar {
-        width: 280px; 
+        width: 240px; 
         height: 100%;
         float: left;
+        margin-top: 15vh;
     }
     .district-section {
         width: 15%; 
@@ -348,9 +353,6 @@ html {
     }
     #map {
         height: calc(85% - 40px);
-    }
-    #sidebar {
-        margin-top: 15vh;
     }
   }
 
@@ -424,17 +426,18 @@ html {
         border-radius: 5px;
     }
     #map {
-        width: calc(100% - 610px);
+        width: calc(100% - 520px);
     }
     
     .map-section {
-        width: calc(100% - 570px); 
+        width: calc(100% - 480px); 
         float: left;
     }
     #sidebar {
-        width: 570px; 
+        width: 480px; 
         height: 100%;
         float: left;
+        margin-top: 14vh;
     }
     .district-section {
         width: 15%; 
@@ -456,8 +459,5 @@ html {
     }
     #map {
         height: calc(86% - 20px);
-    }
-    #sidebar {
-        margin-top: 14vh;
     }
   }
