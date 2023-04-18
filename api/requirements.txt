@@ -1,3 +1,0 @@
-flask==1.1.4
-pymongo
-markupsafe==2.0.1

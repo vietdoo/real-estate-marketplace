@@ -1,4 +1,4 @@
-import s3 import S3
+from s3 import S3
 
 S3_client = S3()
 

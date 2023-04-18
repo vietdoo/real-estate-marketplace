@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Bé Bơ Chatbot GPT</title>
+    <link rel="shortcut icon" type="image/png" href="../static/favicon.ico">
+    <style>
+      /* Default styles */
+      body {
+  background-color: #f5f5f5;
+  color: #333;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.chat-box {
+  height: 800px;
+  overflow-y: scroll;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 30px;
+}
+
+.message.bot {
+  align-items: flex-start;
+}
+
+.message.me {
+  align-items: flex-end;
+}
+
+.message .name {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.message .bubble {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #eee;
+  color: #333;
+}
+
+.message.me .bubble {
+  background-color: #d9e2e1;
+  color: #333;
+}
+
+.message.bot .bubble {
+  background-color: #87ceeb;
+  color: #fff;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: none;
+  font-size: 28px;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #87ceeb;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #6ca3a7;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+}
+
+.img-fluid {
+  display: none;
+}
+
+@media only screen 
+  and (max-device-width: 414px) 
+  and (max-device-height: 896px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  body {
+    font-size: 40px;
+  }
+
+  .message {
+    font-size: 40px;
+  }
+
+  input[type="text"] {
+    font-size: 40px;
+  }
+
+  input[type="submit"] {
+    font-size: 40px;
+    padding: 12px 24px;
+  }
+  
+  /* Adjust chat box height for better visibility */
+  .chat-box {
+    height: 700px;
+  }
+
+  /* Adjust margin for the input box */
+  .input-box {
+    margin-top: 20px;
+  }
+
+}
+    </style>
+  </head>
+  <body>
+    <div class="homepage-image">
+      <img src="../static/chatbot/img/home.jpg" class="img-fluid">
+    </div>
+    <div class="container">
+      <div class="chat-box" id="chat-box"></div>
+      <form onsubmit="sendMessage(); return false;">
+        <div class="input-box">
+          <input type="text" id="message-input" placeholder="Nhập tin nhắn..." />
+          <input type="submit" value="Gửi" />
+        </div>
+      </form>
+      
+    
+
+    <script>
+      
+      let chatBox = document.getElementById('chat-box');
+
+      let responseElement = document.createElement('div');
+      responseElement.classList.add('message');
+      responseElement.classList.add('bot');
+      responseElement.innerHTML = '<span class="name">Bé Bơ🥑:</span><div class="bubble">' + 'Xin chào Bơ giúp được gì ạ ❤️' + '</div>';
+      chatBox.appendChild(responseElement);
+
+      async function getAnswer(message) {
+        const settings = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+       
+
+            body: JSON.stringify({
+                prompt: message 
+            })
+        };
+        const response = await fetch('http://localhost:5000/chatbot', settings)
+        if (!response.ok) {
+          
+          return 'Bơ đang bận uống sữa, bạn quay lại sau nhé 😘'
+        } else
+          return response.text();
+      }
+
+
+      async function sendMessage() {
+        let messageInput = document.getElementById('message-input');
+        let message = messageInput.value.trim();
+        messageInput.value = '';
+
+        if (message) {
+          
+          let messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.classList.add('me');
+          messageElement.innerHTML = '<span class="name">Me:</span><div class="bubble">' + message + '</div>';
+          chatBox.appendChild(messageElement);
+          scrollToBottom();
+          const result = await getAnswer(message);
+            
+
+          let responseElement = document.createElement('div');
+          responseElement.classList.add('message');
+          responseElement.classList.add('bot');
+          responseElement.innerHTML = '<span class="name">Bé Bơ🥑:</span><div class="bubble">' + result + '</div>';
+          chatBox.appendChild(responseElement);
+
+          scrollToBottom();
+        }
+      }
+
+      function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    </script>
+  </body>
+</html>
