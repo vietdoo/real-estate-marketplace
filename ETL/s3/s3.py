@@ -11,4 +11,5 @@ class S3():
         self.client.upload_file(   
             Filename = input_name,
             Bucket = bucket_name,
-            Key = output_name)
+            Key = output_name,
+            ExtraArgs={'ACL':'public-read'})
