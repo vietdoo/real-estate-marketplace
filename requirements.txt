@@ -1,12 +1,8 @@
 # pip install -r requirements.txt
 # python3.8 environment
-
-openai
 flask
 gunicorn
 flask_cors
 pymongo
 pandas
 pycocotools>=2.0
-# FLOPs computation
-# pytorch_quantization>=2.1.1

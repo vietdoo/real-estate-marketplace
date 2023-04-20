@@ -20,11 +20,11 @@ backend: Python, Flask, Mongo.
 ![Tên hình ảnh](./public/project.jpg)
 
 ## Usage
-Start docker-compose
 ```
-docker-compose up --build
+pip install -r "requirements.txt"
+flask run
 ```
-Server run at http://localhost:5029/ or in the domain set up in nginx(option).
+Server run at http://localhost:5000
 
 ## Demo
 
